@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* 滑鼠在表格裡面作用，改成想要的圖片 */
+            /* 50 50 調整成滑鼠的中心點(因為圖片是100px*100px) */
+            cursor: url(./images/bee.png) 25 25, auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="top">Honey Challenge</div>
+        <div id="left">
+            <div id="flower">
+                <h1>Game tips</h1>
+                <table>
+                    <tr>
+                        <td><img src="./images/flower1.png" alt="" width="80px"></td>
+                        <td>Score : 1</td>
+                    </tr>
+                    <tr>
+                        <td><img src="./images/flower2.png" alt="" width="80px"></td>
+                        <td>Score : 2</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div id="player-rank">
+                <h1>Ranks</h1>
+                <br>
+                Player : <span id="highscore-player">-</span>
+                <br>
+                Score : <span id="highscore-score">-</span>
+            </div>
+        </div>
+        <div id="right">
+            <div id="time">
+                <br>
+                <h1>Time: <span id="text-countdown">-</span></h1>
+                Score : <span id="text-score">-</span>
+            </div>
+            <div id="play">
+                <table id="game" class="game" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <div class="holes" id="hole7"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole8"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole9"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="holes" id="hole4"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole5"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole6"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="holes" id="hole1"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole2"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                        <td>
+                            <div class="holes" id="hole3"></div>
+                            <img src="./images/white-09.png" alt="">
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div id="btn">
+                <input type="button" value="Start" id="btn-start" class="btn">
+            </div>
+        </div>
+        <div id="footer">&#169; yunllgood</div>
+    </div>
+
+
+    <script>
+        const btnStart = document.getElementById('btn-start')
+        const holes = document.getElementsByClassName('holes')
+        const textScore = document.getElementById('text-score')
+        const textHighscorePlayer = document.getElementById('highscore-player')
+        const textHighscore = document.getElementById('highscore-score')
+        const textCountdown = document.getElementById('text-countdown')
+
+        const audio = new Audio()
+        audio.src = './yay.mp3'
+
+        let score = 0
+        let timer = 0
+        let countdown = 0
+        // 儲存資料
+        let highscore = { name: '', score: 0 }
+        // 用JSON.parse解析存進來的資料
+        const highStorage = JSON.parse(localStorage.getItem('wam'))
+        if (highStorage !== null) {
+            highscore = highStorage
+            textHighscorePlayer.innerText = highscore.name
+            textHighscore.innerText = highscore.score
+
+        }
+
+        btnStart.onclick = () => {
+            // 開始後，讓"開始按鈕"變成不能點擊
+            btnStart.disabled = true
+            score = 0
+            textScore.innerText = score
+
+            countdown = 30
+            textCountdown.innerText = countdown
+
+            // 為了補時間，寫成function
+            timer = setInterval(game, 1000)
+            game()
+        }
+
+        // 遊戲開始後，隨機出現地鼠
+        const game = () => {
+            for (const hole of holes) {
+                hole.classList.remove('flower1', 'flower2', 'flower1-c', 'flower2-c')
+            }
+            for (let i = 0; i < 2; i++) {
+                const random = Math.floor(Math.random() * 9)
+                holes[random].classList.add('flower1')
+            }
+            for (let i = 0; i < 1; i++) {
+                const random = Math.floor(Math.random() * 9)
+                holes[random].classList.add('flower2')
+            }
+            //倒數
+            countdown--
+            textCountdown.innerText = countdown
+            if (countdown <= 0) {
+                clearInterval(timer)
+                alert(`你得到${score}分`)
+
+                btnStart.disabled = false
+                for (const hole of holes) {
+                    hole.classList.remove('flower1', 'flower2', 'flower1-c', 'flower2-c')
+                }
+
+                if (score > highscore.score) {
+                    audio.play()
+                    highscore.score = score
+                    highscore.name = prompt('最高分! 請輸入名字')
+                    if (highscore.name === null || highscore.name.length === 0) {
+                        highscore.name = 'unknown'
+                    }
+                    textHighscorePlayer.innerText = highscore.name
+                    textHighscore.innerText = highscore.score
+                    // 儲存資料
+                    localStorage.setItem('wam', JSON.stringify(highscore))
+                }
+            }
+        }
+
+        //點到地鼠加分數 
+        for (const hole of holes) {
+            hole.onclick = () => {
+                if (hole.classList.contains('flower1')) {
+                    hole.classList.replace('flower1', 'flower1-c')
+
+                    score++
+                } else if (hole.classList.contains('flower2')) {
+                    hole.classList.replace('flower2', 'flower2-c')
+                    score += 2
+
+                } textScore.innerText = score
+            }
+        }
+
+        // 用數字小鍵盤也能玩
+        document.onkeydown = (event) => {
+            if (!isNaN(event.key) && event.code.includes('Numpad')) {
+                const target = document.getElementById(`hole${event.key}`)
+                if (target !== null && target.classList.contains('flower1')) {
+                    target.classList.replace('flower1', 'flower1-c')
+                    score++
+                } else if (target !== null && target.classList.contains('flower2')) {
+                    target.classList.replace('flower2', 'flower2-c')
+                    score += 2
+                } textScore.innerText = score
+            }
+        }
+
+    </script>
+</body>
+
+</html>

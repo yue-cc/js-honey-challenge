@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: wheat;
+}
+
+#main {
+  width: 1024px;
+  height: 780px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#top {
+  width: 1024px;
+  height: 100px;
+  color: rgb(255, 136, 0);
+  font-family: 'Lobster', cursive;
+  text-align: center;
+  font-size: 4rem;
+  text-shadow: 2px 2px 2px rgb(255, 255, 255), 0 1px 5px rgb(129, 84, 0);
+}
+
+#left {
+  width: 250px;
+  height: 650px;
+  float: left;
+  background: url(../images/wood.jpg);
+  border-radius: 50px 0 0 50px;
+}
+
+#flower {
+  width: 100%;
+  height: 355px;
+  font-family: 'Roboto', sans-serif;
+  margin: 40px 40px;
+}
+
+#player-rank {
+  font-family: 'Roboto', sans-serif;
+  width: 210px;
+  height: 150px;
+  margin: 5px 40px;
+}
+
+#right {
+  width: 774px;
+  height: 650px;
+  float: right;
+  position: relative;
+  border-radius: 0 50px 50px 0;
+  background: url(../images/green-grass-pattern-texture-background-close-up_64749-2296.jpg);
+  z-index: -2;
+}
+
+#time {
+  width: 774px;
+  height: 100px;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  text-align: center;
+}
+
+#play {
+  width: 774px;
+  height: 480px;
+}
+
+#play td {
+  position: relative;
+}
+
+/* 表格背景 */
+#play img {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 0%;
+  z-index: -1;
+  animation-name: zoomIn;
+  animation-duration: 1s;
+}
+
+.game {
+  margin: auto;
+}
+
+.holes {
+  width: 150px;
+  height: 150px;
+  z-index: 0;
+}
+
+#btn {
+  width: 774px;
+  height: 70px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+#footer {
+  width: 1024px;
+  height: 30px;
+  font-family: 'Roboto', sans-serif;
+  color: #747474;
+  line-height: 30px;
+  text-align: center;
+  clear: both;
+}
+
+.btn {
+  background-color: #ffa600; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 70px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
+  border-radius: 15px;
+}
+
+.flower1 {
+  background: url(../images/flower1.png) no-repeat;
+  background-size: cover;
+  animation-name: zoomIn;
+  animation-duration: 1s;
+}
+.flower2 {
+  background: url(../images/flower2.png) no-repeat;
+  animation-name: zoomIn;
+  animation-duration: 1s;
+  background-size: cover;
+}
+.flower1-c {
+  background: url(../images/flower1-c.png) no-repeat;
+  background-size: cover;
+}
+.flower2-c {
+  background: url(../images/flower2-c.png) no-repeat;
+  background-size: cover;
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
